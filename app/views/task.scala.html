@@ -1,0 +1,25 @@
+@(tasks: List[Task], formData: Form[String])
+
+@import helper._
+
+@main("Task List") {
+	<h1>@tasks.size Task(s)</h1>
+	
+	<ul>
+	@tasks.map { task =>
+		@form(routes.App.deleteTask(task.id)) {
+			<li>
+				@task.label
+				<input type="submit" value="delete"/>
+			</li>
+		}
+		
+	}
+	</ul>
+	
+	<h2>Add new task</h2>
+	@form(routes.App.newTask) {
+		@inputText(formData("label"))
+		<input type="submit" value="save"/>
+	}
+}
