@@ -10,6 +10,16 @@ POST	/tasks/:id/delete			controllers.App.deleteTask(id: Long)
 
 GET		/dummy						controllers.Dummy.index
 GET		/dummy/gotit				controllers.Dummy.gotit
+GET		/dummy/param/:name			controllers.Dummy.param(name: String)
+GET		/dummy/jump					controllers.Dummy.jump(page: Int ?= 1)
+GET		/dummy/ctype				controllers.Dummy.ctype
+GET		/dummy/cookie				controllers.Dummy.cookie
+GET		/dummy/nocookie				controllers.Dummy.nocookie
+GET		/dummy/connect				controllers.Dummy.connect(name: String ?= "", email: String ?= "")
+GET		/dummy/getEmail				controllers.Dummy.getEmail
+GET		/dummy/bye					controllers.Dummy.bye
+GET		/dummy/showFlash			controllers.Dummy.showFlash
+GET		/dummy/flashIt				controllers.Dummy.flashIt
 
 # Map static resources from the /public folder to the /assets URL path
 GET		/assets/*file				controllers.Assets.at(path="/public", file)

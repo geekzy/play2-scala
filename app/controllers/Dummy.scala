@@ -12,4 +12,60 @@ object Dummy extends Controller {
 	def gotit = Action { request =>
 		Ok("Got request [" + request + "]")
 	}
+	
+	def param(name: String) = Action {
+		Ok("Hello " + name)	
+	}
+	
+	def jump(page: Int) = Action {
+		Ok(views.html.index("Page : " + page))
+	}
+	
+	def ctype = Action {
+		Ok("Hello World!").withHeaders(
+			CACHE_CONTROL -> "max-age=3600",
+			ETAG -> "xxx"
+		)
+	}
+	
+	def cookie = Action {
+		Ok("Hello Cookie").withCookies(
+			Cookie("theme", "blue")
+		)
+	}
+	
+	def nocookie = Action {
+		Ok("Goodbye Cookie").discardingCookies("theme")
+	}
+	
+	def connect(name: String, email: String) = Action {
+		Ok("Welcome " + name).withSession(
+			"connected" -> email,
+			"name" -> name
+		)
+	}
+	
+	def getEmail = Action { request =>
+		request.session.get("connected").map { email =>
+			Ok("Email: " + email)
+		}.getOrElse {
+			Unauthorized("Opps.. you are not Connected")
+		}
+	}
+	
+	def bye = Action {
+		Ok("Bye...").withNewSession
+	}
+	
+	def showFlash = Action { implicit request =>
+		Ok {
+			flash.get("success").getOrElse("Welcome!")
+		}	
+	}
+	
+	def flashIt = Action {
+		Redirect(routes.Dummy.showFlash).flashing(
+			"success" -> "Item has been created"
+		)
+	}
 }
