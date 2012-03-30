@@ -65,7 +65,7 @@ object Dummy extends Controller {
 	
 	def showFlash = Action { implicit request =>
 		Ok {
-			//flash.get("name").getOrElse("Welcome!")
+			flash.get("name").getOrElse("Welcome!")
 		}	
 	}
 	
