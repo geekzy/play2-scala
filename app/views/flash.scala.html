@@ -1,0 +1,12 @@
+@(data: Form[String])
+
+@import helper._
+
+@main("Flash It!") {
+
+	@form(routes.Dummy.save) {
+		@inputText(data("callme"))
+		<input type="submit" value="Flash It!"/>
+	}
+
+}
