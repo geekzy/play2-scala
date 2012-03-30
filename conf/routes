@@ -20,6 +20,7 @@ GET		/dummy/getEmail				controllers.Dummy.getEmail
 GET		/dummy/bye					controllers.Dummy.bye
 GET		/dummy/showFlash			controllers.Dummy.showFlash
 GET		/dummy/flashIt				controllers.Dummy.flashIt
+POST	/dummy/save					controllers.Dummy.save
 
 # Map static resources from the /public folder to the /assets URL path
 GET		/assets/*file				controllers.Assets.at(path="/public", file)

@@ -2,6 +2,8 @@ package controllers
 
 import play.api._
 import play.api.mvc._
+import play.api.data._
+import play.api.data.Forms._
 import views.html._
 
 object Dummy extends Controller {
@@ -57,15 +59,30 @@ object Dummy extends Controller {
 		Ok("Bye...").withNewSession
 	}
 	
+	val data = Form(
+		"callme" -> nonEmptyText
+	)
+	
 	def showFlash = Action { implicit request =>
 		Ok {
-			flash.get("success").getOrElse("Welcome!")
+			flash.get("callme").getOrElse("Welcome!")
 		}	
 	}
 	
 	def flashIt = Action {
-		Redirect(routes.Dummy.showFlash).flashing(
-			"success" -> "Item has been created"
+		Ok(views.html.flash(data))
+	}
+	
+	def save = Action { implicit request =>
+		data.bindFromRequest.fold(
+			errors => BadRequest(views.html.flash(errors)),
+			callme => {
+				Redirect(routes.Dummy.showFlash).flashing(
+					"success" -> "Item has been created",
+					"name" -> callme
+				)
+			}
 		)
+			
 	}
 }
